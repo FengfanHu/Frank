@@ -1,0 +1,24 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "title": "All Categories"
+    },
+    {
+      "id": 2,
+      "title": "JavaScript"
+    },
+    {
+      "id": 3,
+      "title": "Machine Learning"
+    },
+    {
+      "id": 4,
+      "title": "Thoughts"
+    },
+    {
+      "id": 5,
+      "title": "Others"
+    }
+  ]
+}
