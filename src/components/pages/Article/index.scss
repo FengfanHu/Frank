@@ -1,11 +1,4 @@
 .content {
-  &Wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
   display: flex;
   flex-direction: row;
   margin-top: 20px;
@@ -21,8 +14,6 @@
     top: 20px;
     text-align: start;
     padding: 20px;
-    background-color: #fafafa;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .1);
     border-left: #1890ffee solid 4px;
   }
 }

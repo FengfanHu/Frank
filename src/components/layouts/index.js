@@ -1,4 +1,4 @@
-import { Layout, List } from 'antd';
+import { Layout } from 'antd';
 import SideBar from "./SideBar";
 import { Switch, Route } from "react-router-dom";
 import Article from "../pages/Article";

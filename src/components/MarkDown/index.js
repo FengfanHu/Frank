@@ -3,7 +3,6 @@ import './index.scss';
 import { Remarkable } from 'remarkable';
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-gist.css';
-import { forwardRef } from 'react';
 
 function MarkDown (props) {
   const { content, links } = props;
