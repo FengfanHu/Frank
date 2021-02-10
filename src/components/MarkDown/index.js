@@ -7,6 +7,8 @@ import 'highlight.js/styles/github-gist.css';
 function MarkDown (props) {
   const { content, links } = props;
 
+  console.log(content);
+
   const linkList = [];
   const md = new Remarkable('full',{
     html: true,
@@ -36,7 +38,7 @@ function MarkDown (props) {
   };
 
   const renderContent = md.render(content);
-  links.current.list = linkList;
+  if (links) links.current.list = linkList;
 
   return (
     <View

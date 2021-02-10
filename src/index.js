@@ -12,9 +12,7 @@ if (module.hot) {
 
 ReactDOM.render(
   <HashRouter>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </HashRouter>
 ,
   document.getElementById('root')
