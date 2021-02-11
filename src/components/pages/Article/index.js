@@ -13,6 +13,8 @@ function Article(props) {
 
 1. 分词/词法分析 Tokenizing
 
+   $c = \\pm \\sqrt{a^2 + b^2}$
+   
    - 词法单元token，一个单词是否被作为token取决于它在该语言下是否有意义
 
      \`\`\`javascript

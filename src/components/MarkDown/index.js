@@ -1,13 +1,13 @@
 import View from "../Common/View";
 import './index.scss';
 import { Remarkable } from 'remarkable';
+import rkatex from './rkatex';
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-gist.css';
 
 function MarkDown (props) {
-  const { content, links } = props;
+  const { content, links, style } = props;
 
-  console.log(content);
 
   const linkList = [];
   const md = new Remarkable('full',{
@@ -27,6 +27,7 @@ function MarkDown (props) {
     }
   });
 
+  md.use(rkatex);
   md.renderer.rules.heading_open = function (tokens, idx /*, options, env */ ) {
     const anchorName = tokens[idx + 1].content;
     linkList.push(anchorName);
@@ -42,6 +43,7 @@ function MarkDown (props) {
 
   return (
     <View
+      style={{ ...style }}
       className={'markdown'}
       dangerouslySetInnerHTML={{
       __html: renderContent
