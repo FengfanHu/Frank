@@ -6,6 +6,7 @@ import others from './others_48.png';
 import zhihu from './zhihu_64.png';
 import github from './github_64.png';
 import linkedin from './linkedin_64.png';
+import poster from './poster.jpg';
 
 const icon = {
   category,
@@ -15,7 +16,8 @@ const icon = {
   others,
   zhihu,
   github,
-  linkedin
+  linkedin,
+  poster
 }
 
 export default icon;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {Layout, Avatar} from 'antd';
 import './index.scss';
 import Menu from "../Menu";
@@ -16,8 +17,15 @@ function SideBar(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
 
+  const history = useHistory();
+
   const handleCollapse = (collapsed) => {
     setCollapsed(collapsed);
+  }
+
+  const handleClickMenu = (index) => {
+    setCurrentIndex(index);
+    history.push(`/categories/${menu[index].title.split(' ').join('-')}`)
   }
 
   useEffect(() => {
@@ -48,7 +56,7 @@ function SideBar(props) {
               id={item.id}
               title={item.title}
               collapsed={collapsed}
-              onClick={() => setCurrentIndex(index)}
+              onClick={() => handleClickMenu(index)}
               selected={index === currentIndex}
             />)
           })

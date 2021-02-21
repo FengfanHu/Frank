@@ -26,6 +26,7 @@ const iconMap = (id) => {
 }
 
 export {
+  icon,
   iconMap,
   staticUrl
 }

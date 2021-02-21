@@ -23,7 +23,7 @@ function Wrapper() {
           <Route path={"/test"}>
             <Article />
           </Route>
-          <Route path={'/'}>
+          <Route path={'/categories/:categoryName'}>
             <ArticleList />
           </Route>
         </Switch>

@@ -1,22 +1,23 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import List from '../../List';
+import {getArticles} from '../../../utils/api';
 
 function ArticleList(props) {
-  const listData = [];
-  for (let i = 0; i < 23; i++) {
-    listData.push({
-      href: 'https://ant.design',
-      title: `ant design part ${i}`,
-      description:
-        '创建时间 2021.01.23',
-      content:
-        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure).We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure).',
-      poster:
-        'https://picsum.photos/150'
-    });
-  }
+  const [articles, setArticles] = useState([]);
+  const { categoryName } = useParams();
+
+  useEffect(() => {
+    async function requestArticles() {
+      const response = await getArticles(categoryName);
+      const result = await response.json();
+      setArticles(result.articles)
+    }
+    requestArticles();
+  }, [categoryName])
 
   return (
-    <List data={listData} />
+    <List data={articles} />
     );
 }
 

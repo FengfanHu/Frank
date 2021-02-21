@@ -54,3 +54,10 @@ export function addArticle(data) {
     body: JSON.stringify(data)
   })
 }
+
+export function getArticles(categoryName) {
+  return fetch(getApiUrl(`categories/${categoryName}`), {
+    mode: 'cors',
+    method: 'GET'
+  })
+}
