@@ -29,7 +29,13 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 20px;
+  }
+  &Description {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: start;
+    padding: 10px 0;
   }
   flex: 1;
   resize: none;

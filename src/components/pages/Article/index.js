@@ -174,7 +174,7 @@ for (var i = 0; i <= 5; i++) {
 
   return (
     <div className={'content'}>
-      <MarkDown content={markdownContent} links={links} />
+      <MarkDown style={{ width: '70%' }} content={markdownContent} links={links} />
       {
         hrefs ?
           <div style={{ marginLeft: '20px' }} >

@@ -37,6 +37,9 @@ function MarkDown (props) {
   md.renderer.rules.heading_close = function (tokens, idx /*, options, env */ ) {
     return '</h' + tokens[idx].hLevel + ' > ';
   };
+  md.renderer.rules.image = function (tokens, idx) {
+    return `<img style="width: 100%" src="${tokens[idx].src}" alt="${tokens[idx].alt}" />`
+  }
 
   const renderContent = md.render(content);
   if (links) links.current.list = linkList;

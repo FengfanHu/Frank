@@ -16,7 +16,8 @@ function Manager(props) {
       message.success('登录成功');
       history.push('/manage');
     } catch (err) {
-      throw new Error(err);
+      message.error('Server Error');
+      console.log(err);
     }
   }
 

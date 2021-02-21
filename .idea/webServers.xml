@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="db538768-8b08-4079-944d-288ddd98e6a7" name="192.168.31.159">
+        <fileTransfer rootFolder="/Users/apple" accessType="SFTP" host="192.168.31.159" port="22" sshConfigId="6d36441f-19de-4edc-93fe-604f4c74e7bd" sshConfig="apple@192.168.31.159:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
