@@ -1,9 +1,10 @@
 .markdown {
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
+  padding: 0 100px;
   font-size: 16px;
   justify-content: flex-start;
   align-items: flex-start;
   text-align: start;
+  overflow: hidden;
 }

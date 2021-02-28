@@ -1,9 +1,10 @@
 .markdownEditor {
    &Wrapper {
+     display: flex;
+     flex-direction: column;
      width: 100%;
-     border: 1px solid #d9d9d9;
-     border-radius: 10px;
      padding: 20px;
+     height: 100%;
    }
   &ToolBar {
     display: flex;
@@ -23,12 +24,13 @@
     flex: 1;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: #f0f0f0;
+    background-color: #fefefe;
+    border-left: solid 1px rgb(121, 121, 121);
   }
   &Content {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    flex: 1;
   }
   &Description {
     display: flex;

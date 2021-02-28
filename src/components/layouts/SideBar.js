@@ -39,11 +39,15 @@ function SideBar(props) {
       className={'sideBar'}
       width={'300'}
       collapsedWidth={'50'}
+      collapsed={collapsed}
       onCollapse={handleCollapse}
     >
+      <View className={'sideBar-button'} onClick={() => setCollapsed(!collapsed)}>
+        { collapsed ? '展开' : '收起' }
+      </View>
       <View show={!collapsed} className={'sideBar-avatar'} >
         <Avatar size={100} alt={'Frank'} src={staticUrl.avatar} />
-        <View style={{ marginTop: '5px', fontSize: '20px' }}>Frank's Blog</View>
+        <View style={{ marginTop: '5px', fontSize: '20px' }} onClick={() => history.push('/')}>Frank's Blog</View>
         <View style={{ fontSize: '12px', color: '#595959' }}>Appreciation, Modesty, Consistence</View>
       </View>
       <Links show={!collapsed} />

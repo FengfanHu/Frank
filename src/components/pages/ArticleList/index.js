@@ -11,13 +11,23 @@ function ArticleList(props) {
     async function requestArticles() {
       const response = await getArticles(categoryName);
       const result = await response.json();
-      setArticles(result.articles)
+      
+      if (categoryName === 'All-Categories') {
+        let articleList = [];
+        result.forEach(category => {
+          articleList = [...articleList, ...category.articles];
+        });
+        setArticles(articleList);
+      } else {
+        setArticles(result.articles);
+      }      
     }
     requestArticles();
   }, [categoryName])
 
+
   return (
-    <List data={articles} />
+    <List data={articles} categoryName={categoryName} />
     );
 }
 

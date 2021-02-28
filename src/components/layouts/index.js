@@ -1,5 +1,6 @@
 import { Layout } from 'antd';
 import SideBar from "./SideBar";
+import { BackTop } from "antd";
 import { Switch, Route } from "react-router-dom";
 import Article from "../pages/Article";
 import ArticleList from "../pages/ArticleList";
@@ -12,7 +13,7 @@ function Wrapper() {
   return (
     <Layout>
       <SideBar />
-      <div className={'contentWrapper'} >
+      <Layout style={{ backgroundColor: '#fefefe' }}>
         <Switch>
           <Route path={"/manage/login"}>
             <Login />
@@ -20,14 +21,15 @@ function Wrapper() {
           <Route path={"/manage"}>
             <Manage />
           </Route>
-          <Route path={"/test"}>
-            <Article />
-          </Route>
           <Route path={'/categories/:categoryName'}>
             <ArticleList />
           </Route>
+          <Route path={"/articles/:categoryName/:articleName"}>
+            <Article />
+          </Route>
         </Switch>
-      </div>
+        <BackTop />
+      </Layout>
     </Layout>
   )
 }

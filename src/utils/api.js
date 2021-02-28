@@ -61,3 +61,10 @@ export function getArticles(categoryName) {
     method: 'GET'
   })
 }
+
+export function getArticle(articleName) {
+  return fetch(getApiUrl(`articles/${articleName}`), {
+    mode: 'cors',
+    method: 'GET'
+  })
+}
