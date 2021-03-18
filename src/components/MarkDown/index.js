@@ -37,7 +37,7 @@ function MarkDown (props) {
     return '</h' + tokens[idx].hLevel + ' > ';
   };
   md.renderer.rules.image = function (tokens, idx) {
-    return `<img class="markdownImg" src="${tokens[idx].src}" alt="${tokens[idx].alt}" />`
+    return `<div class="markdownImgWrapper"><img class="markdownImg" src="${tokens[idx].src}" alt="${tokens[idx].alt}" /></div>`
   }
 
   const renderContent = md.render(content);

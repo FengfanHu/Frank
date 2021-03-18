@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import View from "../../Common/View";
 import './index.scss';
 import { login } from '../../../utils/api';
+import {CODE} from "../../../utils";
 
 function Manager(props) {
   const history = useHistory();
@@ -11,7 +12,7 @@ function Manager(props) {
     try {
       const response = await login(values);
       const result = await response.json();
-      if (result.code !== 200) return message.warning('验证失败');
+      if (result.code !== CODE.SUCCESS) return message.warning('验证失败');
       localStorage.setItem('token', result.data.token);
       message.success('登录成功');
       history.push('/manage');

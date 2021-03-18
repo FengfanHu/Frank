@@ -5,18 +5,21 @@ import { Switch, Route } from "react-router-dom";
 import Article from "../pages/Article";
 import ArticleList from "../pages/ArticleList";
 import Login from "../pages/Login";
+import Write from "../pages/Write";
+import "./index.scss";
 import Manage from "../pages/Manage";
 
 function Wrapper() {
-
-
   return (
     <Layout>
       <SideBar />
-      <Layout style={{ backgroundColor: '#fefefe' }}>
+      <Layout className={"layout"} >
         <Switch>
           <Route path={"/manage/login"}>
             <Login />
+          </Route>
+          <Route path={"/manage/write"}>
+            <Write />
           </Route>
           <Route path={"/manage"}>
             <Manage />

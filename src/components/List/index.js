@@ -22,7 +22,7 @@ function List(props) {
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
                   <img className={'listPoster'} src={icon.poster} alt="poster" />
                   <View className={'listItem'}>
-                    <h2 className={'listItem-title'}>{item.title}</h2>
+                    <h2 className={'listItem-title'}>{item.title.split('-').join(' ')}</h2>
                     <View className={'listItem-date'}>{`创建时间：${createdAt}`}</View>
                     <View className={'listItem-description'}>{item.description}</View>
                   </View>

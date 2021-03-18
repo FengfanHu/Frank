@@ -1,169 +1,129 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import {Button, Switch, Upload, Progress, Select, Divider, Input, message} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import View from "../../Common/View";
-import './index.scss';
-import MarkDown from "../../MarkDown";
-import { getToken, getCategories, addCategory, addArticle } from '../../../utils/api';
-import * as qiniu from 'qiniu-js';
-import copy from 'copy-to-clipboard';
-import { QiniuConfig } from '../../../utils/secret';
+import {Tabs, List, message, Popconfirm, Input} from 'antd';
+import {getCategories, deleteCategory, updateCategory} from "../../../utils/api";
+import { CODE } from '../../../utils';
 
-const { Option } = Select;
+const { TabPane } = Tabs;
 
-function Manage(props) {
-  const history = useHistory();
-  const [token, setToken] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState('');
-  const [newCategory, setNewCategory] = useState('');
-  const [preview, setPreview] = useState(false);
-  const [uploadPercent, setUploadPercent] = useState(0);
-  const [uploadStatus, setUploadStatus] = useState('normal');
-  const [markdownContent, setMarkdownContent] = useState('');
-
-  const onSwitchPreview = (checked) => {
-    setPreview(checked);
-  }
-
-  const getUploadToken = async() => {
-    const response = await getToken();
-    const result = await response.json();
-    setToken(result.data.token);
-  }
-
-  const customRequest = (e) => {
-    const file = e.file;
-    const uniqueName = `${category.name}-${title}-${file.name}`;
-    const observable = qiniu.upload(file, uniqueName, token);
-    const subscription = observable.subscribe({
-      next(res) {
-        setUploadPercent(res.total.percent);
-        if (res.total.percent !== 100) setUploadStatus('normal');
-      },
-      error(err) {
-        console.log(err);
-        setUploadStatus('exception');
-      },
-      complete(res) {
-        console.log(res, '上传成功');
-        setUploadStatus('success');
-        copy(`${QiniuConfig.domain}/${uniqueName}`)
-        subscription.unsubscribe();
-      }
-    })
-  }
-
-  const addItem = async(value) => {
-    const response = await addCategory(value);
-    const result = await response.json();
-    if (result.code === 200) {
-      message.success('新增成功');
-    } else {
-      message.error('操作失败');
-    }
-  }
-
-  const submit = async() => {
-    if (!title || !category.id || !description || !markdownContent) {
-      message.error('内容不完整，请再次核对');
-      return;
-    }
-    const response = await addArticle({
-      title: title,
-      description: description,
-      content: markdownContent,
-      categoryId: category.id
-    })
-    const result = await response.json();
-    if (result.code === 200) {
-      message.success('新增成功');
-      history.push('/');
-    } else {
-      message.error('操作失败');
-    }
-    
-  }
+function Manage() {
+  const [tabInfo, setTabInfo] = useState([]);
+  const [modify, setModify] = useState(false);
+  const [newName, setNewName] = useState('');
 
   useEffect(() => {
     async function requestCategorise() {
       const response = await getCategories();
       const result = await response.json();
-      setCategories(result.data);
+      setTabInfo(result.data);
     }
     requestCategorise();
   }, [])
 
-  return (
-    <View className={'markdownEditorWrapper'}>
-      <View className={'markdownEditorToolBar'}>
-        <Input style={{ flex: 1, fontWeight: 'bold', fontSize: '32px' }} placeholder={'请输入标题'} bordered={false} values={title} onChange={(e) => setTitle(e.target.value)} />
-        <Select
-          style={{ marginRight: '10px', width: '200px' }}
-          placeholder={'所属分类'}
-          maxTagCount={'responsive'}
-          onSelect={(index) => setCategory(categories[index])}
-          dropdownRender={menu => (
-           <View>
-             { menu }
-             <Divider style={{ margin: '4px 0' }} />
-             <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-              <Input style={{ flex: 'auto' }} value={newCategory} onChange={(e) => setNewCategory(e.target.value)} />
-              <View style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer', color: '#1890FF' }} onClick={() => addItem(newCategory)} >
-                <PlusOutlined /> 新增分类
-              </View>
-            </div>
-           </View>
-          )}
-        >
-          {
-            categories.map((category, index) => {
-              return (<Option key={index}>{category.name}</Option>)
-            })
-          }
-        </Select>
-        <Upload
-          name={'image'}
-          fileList={[]}
-          disabled={!title || !category}
-          customRequest={customRequest}
-          beforeUpload={getUploadToken}
-          action={'http://upload.qiniup.com'}
-        >
-          <Button style={{ marginRight: '10px' }} disabled={!title || !category}>上传图片并复制链接</Button>
-          {
-            uploadPercent
-              ? <Progress style={{ marginRight: '10px' }} type={"circle"} width={20} percent={uploadPercent} status={uploadStatus} />
-              : null
-          }
-        </Upload>
-        <View className={'markdownEditorToolBarPreview'}>
-          <label style={{ marginRight: '10px' }}>开启预览</label>
-          <Switch style={{ marginRight: '10px' }} checked={preview} onChange={onSwitchPreview} checkedChildren={'预览'} />
-          <Button type={'primary'} onClick={() => submit()} >发布</Button>
-        </View>
-      </View>
-      <View className={'markdownEditorDescription'}>
-        <Input placeholder={'请输入文章概要'} bordered={false} value={description} onChange={(e) => setDescription(e.target.value)} />
-      </View>
-      <View className={'markdownEditorContent'}>
-        {/* 文本编辑区域 */}
-        <textarea
-          className={'markdownEditor'}
-          value={markdownContent}
-          placeholder={'Please input your markdown text'}
-          onChange={(event) => setMarkdownContent(event.target.value)}
+  const confirmUpdate = async (item) => {
+    try {
+      const response = await updateCategory({
+        id: item.id,
+        name: newName ? newName : item.name
+      });
+      const result = await response.json();
+
+      result && result.code === CODE.SUCCESS
+        ? message.success('删除成功')
+        : message.error('操作失败')
+    } catch (e) {
+      message.error('操作失败')
+    }
+  }
+
+  const confirmDelete = async (id) => {
+    try {
+      const response = await deleteCategory(id);
+      const result = await response.json();
+
+      result && result.code === CODE.SUCCESS
+        ? message.success('删除成功')
+        : message.error('操作失败')
+    } catch (e) {
+      message.error('操作失败')
+    }
+  }
+
+  const cancel = () => {
+    message.info('操作已取消');
+  }
+
+  console.log('====', newName);
+
+  return (<View style={{ padding: '20px 50px' }}>
+    <Tabs>
+      <TabPane key={'1'} tab={'分类管理'}>
+        <List
+          itemLayout="horizontal"
+          dataSource={tabInfo}
+          renderItem={item => (
+            <List.Item
+              actions={[
+                <Popconfirm
+                  title="您确定要修改该分类?"
+                  placement={'left'}
+                  onConfirm={() => confirmUpdate(item)}
+                  onCancel={cancel}
+                  okText="修改"
+                  cancelText="取消"
+                  okButtonProps={{
+                    danger: true
+                  }}
+                >
+                  <div style={{ color: 'blue' }}>修改</div>
+                </Popconfirm>,
+                <Popconfirm
+                  title="您确定要删除该分类?"
+                  placement={'left'}
+                  onConfirm={() => confirmDelete(item.id)}
+                  onCancel={cancel}
+                  okText="删除"
+                  cancelText="取消"
+                  okButtonProps={{
+                    danger: true
+                  }}
+                >
+                  <div style={{ color: 'red' }}>删除</div>
+                </Popconfirm>
+              ]}
+            >
+              <List.Item.Meta title={
+                modify
+                  ?
+                  (<Input style={{ textAlign: 'start' }}
+                       value={newName}
+                       bordered={false}
+                       onChange={(e) => setNewName(e.target.value)} />)
+                  : item.name
+              } />
+              <List.Item.Meta title={`创建时间：${item.created_at}`} />
+              <List.Item.Meta title={`更新时间：${item.updated_at}`} />
+            </List.Item>)}
         />
-        {/* 预览区域 */}
-        <View show={preview} className={'markdownEditorPreviewBlock'}>
-          <MarkDown style={{ width: '100%' }} content={markdownContent} />
-        </View>
-      </View>
-    </View>
-  )
+      </TabPane>
+      <TabPane key={'2'} tab={'文章管理'}>
+        <List
+          itemLayout="horizontal"
+          dataSource={tabInfo}
+          renderItem={item => (
+            <List.Item
+              actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+            >
+              <List.Item.Meta
+                title={<a href="https://ant.design">{item.name.last}</a>}
+                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              />
+              <div>content</div>
+            </List.Item>)}
+        />
+      </TabPane>
+    </Tabs>
+  </View>);
 }
 
 export default Manage;

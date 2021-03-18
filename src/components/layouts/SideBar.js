@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {Layout, Avatar} from 'antd';
 import './index.scss';
@@ -28,10 +28,6 @@ function SideBar(props) {
     history.push(`/categories/${menu[index].title.split(' ').join('-')}`)
   }
 
-  useEffect(() => {
-    console.log('SideBar render');
-  }, [])
-
   return (
     <Sider
       theme={'light'}
@@ -42,13 +38,17 @@ function SideBar(props) {
       collapsed={collapsed}
       onCollapse={handleCollapse}
     >
-      <View className={'sideBar-button'} onClick={() => setCollapsed(!collapsed)}>
+      <View className={'sideBar-button'} onClick={() => {
+        setCollapsed(!collapsed);
+      }}>
         { collapsed ? '展开' : '收起' }
       </View>
       <View show={!collapsed} className={'sideBar-avatar'} >
-        <Avatar size={100} alt={'Frank'} src={staticUrl.avatar} />
-        <View style={{ marginTop: '5px', fontSize: '20px' }} onClick={() => history.push('/')}>Frank's Blog</View>
-        <View style={{ fontSize: '12px', color: '#595959' }}>Appreciation, Modesty, Consistence</View>
+        <View style={{ padding: '20px 0' }}>
+          <Avatar size={100} alt={'Frank'} src={staticUrl.avatar} shape={'square'} />
+          <View style={{ marginTop: '5px', fontSize: '20px', cursor: 'pointer' }} onClick={() => history.push('/')}>Frank's Blog</View>
+          <View style={{ fontSize: '12px', color: '#595959' }}>Appreciation, Modesty, Consistence</View>
+        </View>
       </View>
       <Links show={!collapsed} />
       <Menu collapsed={collapsed}>

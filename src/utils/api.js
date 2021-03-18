@@ -35,6 +35,26 @@ export function getCategories() {
   })
 }
 
+export function deleteCategory(value) {
+  return fetch(getApiUrl('categories/delete'), {
+    mode: 'cors',
+    method: 'POST',
+    headers: authHeader,
+    body: JSON.stringify({
+      id: value
+    })
+  })
+}
+
+export function updateCategory(data) {
+  return fetch(getApiUrl('categories/update'), {
+    mode: 'cors',
+    method: 'POST',
+    headers: authHeader,
+    body: JSON.stringify(data)
+  })
+}
+
 export function addCategory(value) {
   return fetch(getApiUrl('categories/add'), {
     mode: 'cors',

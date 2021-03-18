@@ -1,5 +1,5 @@
 import './index.scss'
-import icon from '../../utils/icons';
+import { icon } from '../../utils';
 import View from "../Common/View";
 
 function Links(props) {
