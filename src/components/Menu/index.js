@@ -5,7 +5,7 @@ function Menu(props) {
 
   return (
     <div className={'menuWrapper'}>
-      <div className={'menu'} style={{ padding: collapsed ? '10px' : '10px 50px' }}>
+      <div className={'menu'} style={{ padding: collapsed ? '10px' : '10px 30px' }}>
         {
           props.children
         }

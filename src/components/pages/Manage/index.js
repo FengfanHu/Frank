@@ -8,8 +8,6 @@ const { TabPane } = Tabs;
 
 function Manage() {
   const [tabInfo, setTabInfo] = useState([]);
-  const [modify, setModify] = useState(false);
-  const [newName, setNewName] = useState('');
 
   useEffect(() => {
     async function requestCategorise() {
@@ -24,7 +22,7 @@ function Manage() {
     try {
       const response = await updateCategory({
         id: item.id,
-        name: newName ? newName : item.name
+        name: item.name
       });
       const result = await response.json();
 
@@ -52,8 +50,6 @@ function Manage() {
   const cancel = () => {
     message.info('操作已取消');
   }
-
-  console.log('====', newName);
 
   return (<View style={{ padding: '20px 50px' }}>
     <Tabs>
@@ -93,32 +89,13 @@ function Manage() {
               ]}
             >
               <List.Item.Meta title={
-                modify
-                  ?
-                  (<Input style={{ textAlign: 'start' }}
-                       value={newName}
-                       bordered={false}
-                       onChange={(e) => setNewName(e.target.value)} />)
-                  : item.name
+                <Input style={{ textAlign: 'start' }}
+                     value={item.name}
+                     bordered={false}
+                />
               } />
               <List.Item.Meta title={`创建时间：${item.created_at}`} />
               <List.Item.Meta title={`更新时间：${item.updated_at}`} />
-            </List.Item>)}
-        />
-      </TabPane>
-      <TabPane key={'2'} tab={'文章管理'}>
-        <List
-          itemLayout="horizontal"
-          dataSource={tabInfo}
-          renderItem={item => (
-            <List.Item
-              actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
-            >
-              <List.Item.Meta
-                title={<a href="https://ant.design">{item.name.last}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              />
-              <div>content</div>
             </List.Item>)}
         />
       </TabPane>
