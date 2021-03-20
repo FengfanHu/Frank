@@ -88,3 +88,19 @@ export function getArticle(articleName) {
     method: 'GET'
   })
 }
+
+export function getArticleById(articleId) {
+  return fetch(getApiUrl(`articles/${articleId}`), {
+    mode: 'cors',
+    method: 'GET'
+  })
+}
+
+export function deleteArticle(id) {
+  return fetch(getApiUrl(`articles/delete`), {
+    mode: 'cors',
+    method: 'POST',
+    headers: authHeader,
+    body: JSON.stringify({articleId: id})
+  })
+}

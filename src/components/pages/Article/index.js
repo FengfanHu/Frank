@@ -6,6 +6,7 @@ import View from "../../Common/View";
 import { getArticle } from "../../../utils/api";
 import { useParams } from "react-router-dom";
 import { Spin } from "antd";
+import Footer from '../../layouts/footer';
 
 function Article(props) {
   const { articleName } = useParams();
@@ -44,6 +45,7 @@ function Article(props) {
                 : null
             }
         </Spin>
+        <Footer />
       </View>
       {
         hrefs ?

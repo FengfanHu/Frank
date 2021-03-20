@@ -31,7 +31,7 @@ function MarkDown (props) {
     const anchorName = tokens[idx + 1].content;
     linkList.push(anchorName);
     const anchor = `<a name="${anchorName}" ></a><br/>`;
-    return anchor + `<h${tokens[idx].hLevel } >`;
+    return anchor + `<h${tokens[idx].hLevel } style="color: #002766">`;
   };
   md.renderer.rules.heading_close = function (tokens, idx /*, options, env */ ) {
     return '</h' + tokens[idx].hLevel + ' > ';

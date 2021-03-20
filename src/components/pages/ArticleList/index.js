@@ -34,9 +34,9 @@ function ArticleList(props) {
   }, [categoryName])
 
 
-  return (
-    <List data={articles} categoryName={categoryName} />
-    );
+  return (<div style={{ height: '100%' }}>
+      <List data={articles} categoryName={categoryName} count={4} />
+    </div>);
 }
 
 export default ArticleList;
